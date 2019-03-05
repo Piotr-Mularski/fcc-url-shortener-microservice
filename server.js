@@ -9,13 +9,11 @@ const router = require('./routes/index');
 const app = express();
 dotenv.config();
 // initial middleware
-app.use(cors({ optionSuccessStatus: 200 }))
+app.use(cors({ optionSuccessStatus: 200 }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', router);
-
-console.log(process.env.DATABASE_URI);
 
 // connect to the database
 mongoose.connect(process.env.DATABASE_URI, (err) => {

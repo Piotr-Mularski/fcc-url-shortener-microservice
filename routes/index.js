@@ -1,10 +1,10 @@
 const express = require('express');
-const router = express.Router();
-const UrlModel = require('../models/url-model');
 const dns = require('dns');
 const url = require('url');
 const validUrl = require('valid-url');
+const UrlModel = require('../models/url-model');
 
+const router = express.Router();
 
 router.get('/', (req, res) => {
 	res.sendFile(process.cwd() + '/views/index.html');
@@ -22,13 +22,13 @@ router.post('/api/shorturl/new', (req, res) => {
 					originalUrl,
 					shortUrl
 				});
-				document.save((err, doc) => {
-					if(err) {
-						console.err('Problem with saving document to the database', err);
+				document.save((error, doc) => {
+					if(error) {
+						console.err('Problem with saving document to the database', error);
 						res.json({ error: 'cannot save document to the database' });
 					} else {
 						console.info('document was successfuly saved to the database', doc);
-						res.json({ 
+						res.json({
 							originalUrl: doc.originalUrl,
 							shortUrl: doc.shortUrl
 						});
@@ -49,10 +49,9 @@ router.get('/api/shorturl/:shorturl', (req, res) => {
 		if(err) {
 			console.log(err);
 		} else {
-			res.status('301').redirect(data.originalUrl)
+			res.status('301').redirect(data.originalUrl);
 		}
-	})
-})
-
+	});
+});
 
 module.exports = router;
